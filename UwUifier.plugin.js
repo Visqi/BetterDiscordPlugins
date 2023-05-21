@@ -1,7 +1,7 @@
 /**
  * @name UwUifier
  * @author Visqi
- * @version 1.0.2
+ * @version 1.0.3
  * @authorId 236863914078371842
  * @description Turns all your messages way cuter!
  * @source https://github.com/Visqi/BetterDiscordPlugins/blob/main/UwUifier.plugin.js
@@ -65,7 +65,7 @@ module.exports = (_ => {
 				const enabled = uwuEnabled;
 				delete this.props.forceState;
 				return BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.PanelButton, Object.assign({}, this.props, {
-					tooltipText: enabled ? "UwU Disabled" : "UwU Enabled",
+					tooltipText: enabled ? "UwU Enabled (Single Quotes to ignore words)" : "UwU Disabled",
 					icon: iconProps => BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SvgIcon, Object.assign({}, iconProps, {
 						nativeClass: true,
 						width: 40,
@@ -180,6 +180,19 @@ module.exports = (_ => {
 				
 				const smiles = ['^_^', '(・`ω´・)', '>:3', 'UwU', '>_<', ':3', 'x3', '^._.^', '(* ^ ω ^)', '(o_ _)ﾉ彡☆', 'ヾ(=`ω´=)ノ”', '(〒︿〒)', '(｡•́︿•̀｡)', '(/ω＼)', '(／。＼)', ':"D', '(≧▽≦)', '(＾▽＾)', '(⌒_⌒;)', '(*4*)', '(≧∀≦)', '(≧∇≦*)', '(;*△*;)', '(>_<)', '(♥ω♥*)', '＼(☆o☆)／', '＼(★∀★)／', '＼(^ω^＼)', '٩(◕‿◕｡)۶', '(o^▽^o)', '(✯◡✯)', '(っ◔◡◔)っ', '(*^ -^*)', '(^_^)', '(〃ω〃)', '(｡♥‿♥｡)', 'ヽ(*⌒▽⌒*)ﾉ', '٩(｡•́‿•̀｡)۶', 'o((*^▽^*))o', 'o(≧∀≦)o', '(─‿‿─)', '(*^‿^*)', 'ヽ(o＾▽＾o)ノ', '＼(^ω^＼)', '(*^.^*)', '(✿◠‿◠)', '(• ε •)', '(^O^)', '(^▽^)', '(⌒▽⌒)☆', '(￣ω￣)', '(◕‿◕)', '(◕‿◕✿)', '(*◕‿◕*)', '^_^', '(*^_^*)', '(¬‿¬)', '(＾◡＾)', '｡◕‿‿◕｡'];
 
+
+				const placeholders = [];
+				let index = 0;
+
+				const replaceWithPlaceholder = (match) => {
+					match = match.replace(new RegExp("'","g"), "");
+					placeholders.push(match);
+					return `<placeholder${index++}>`;
+				}
+
+				text = text.replace(/'(.*?)'/g, replaceWithPlaceholder);
+				text = text.replace(/\bhttps?:\/\/\S+/gi, replaceWithPlaceholder);
+
 				// Uwufy the text
 				let uwufiedText = text
 					.replace(/r|l/g, 'w')
@@ -239,6 +252,10 @@ module.exports = (_ => {
 						return sentence;
 					}
 				}).join('. ');
+				
+				placeholders.forEach((placeholder, i) => {
+					uwufiedText = uwufiedText.replace(`<pwacehowdew${i}>`, placeholder);
+				});
 
 				return uwufiedText;
 			}
