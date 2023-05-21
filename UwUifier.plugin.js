@@ -4,8 +4,8 @@
  * @version 1.0.2
  * @authorId 236863914078371842
  * @description Turns all your messages way cuter!
- * @source https://gist.github.com/Visqi/383e96f1c52964a057d3f73edd8b0bd6
- * @updateUrl https://gist.githubusercontent.com/Visqi/383e96f1c52964a057d3f73edd8b0bd6/raw/f50af9a955246240f37f15f9ebb7c809b94c2e58/UwUifier.plugin.js
+ * @source https://github.com/Visqi/BetterDiscordPlugins/blob/main/UwUifier.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/Visqi/BetterDiscordPlugins/main/UwUifier.plugin.js
  */
 
 module.exports = (_ => {
